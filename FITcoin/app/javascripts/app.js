@@ -1,9 +1,14 @@
 // Import the page's CSS. Webpack will know what to do with it.
 import "../stylesheets/app.css";
+var url = require("file-loader!./../images/fit.png");
 
 // Import libraries we need.
-import { default as Web3} from 'web3';
-import { default as contract } from 'truffle-contract'
+import {
+  default as Web3
+} from 'web3';
+import {
+  default as contract
+} from 'truffle-contract'
 
 // Import our contract artifacts and turn them into usable abstractions.
 import fitcoin_artifacts from '../../build/contracts/FITcoin.json'
@@ -16,9 +21,13 @@ var FITcoin = contract(fitcoin_artifacts);
 // For application bootstrapping, check out window.addEventListener below.
 var accounts;
 var account;
+var balance;
+
 
 window.App = {
+
   start: function() {
+    document.getElementById("logo").innerHTML = "<img src=\"" + url + "\" alt=\"logo\">"
     var self = this;
 
     // Bootstrap the FITcoin abstraction for Use.
@@ -54,10 +63,13 @@ window.App = {
     var meta;
     FITcoin.deployed().then(function(instance) {
       meta = instance;
-      return meta.getBalance.call(account, {from: account});
+      return meta.getBalance.call(account, {
+        from: account
+      });
     }).then(function(value) {
       var balance_element = document.getElementById("balance");
       balance_element.innerHTML = value.valueOf();
+      balance = value.toNumber();
     }).catch(function(e) {
       console.log(e);
       self.setStatus("Error getting balance; see log.");
@@ -70,19 +82,34 @@ window.App = {
     var amount = parseInt(document.getElementById("amount").value);
     var receiver = document.getElementById("receiver").value;
 
-    this.setStatus("Initiating transaction... (please wait)");
+    if (amount == null || receiver == null || receiver == '' || amount == NaN) {
+      this.setStatus("Please enter all fields in the form before initiating transfer.");
+    } else {
+      this.setStatus("Initiating transaction... (please wait)");
 
-    var meta;
-    FITcoin.deployed().then(function(instance) {
-      meta = instance;
-      return meta.transfer(receiver, amount, {from: account});
-    }).then(function() {
-      self.setStatus("Transaction complete!");
-      self.refreshBalance();
-    }).catch(function(e) {
-      console.log(e);
-      self.setStatus("Error sending coin; see log.");
-    });
+      var meta;
+      FITcoin.deployed().then(function(instance) {
+        meta = instance
+
+        if (balance < amount) {
+          self.setStatus("Insufficient Balance!");
+        } else {
+          return meta.transfer(receiver, amount, {
+            from: account
+          });
+        }
+      }).then(function() {
+        if (balance < amount) {
+          self.setStatus("Insufficient Balance!");
+        } else {
+          self.setStatus("Transaction to !"+ receiver +" complete");
+          self.refreshBalance();
+        }
+      }).catch(function(e) {
+        console.log(e);
+        self.setStatus("Error sending coin; see log.");
+      });
+    }
   }
 };
 

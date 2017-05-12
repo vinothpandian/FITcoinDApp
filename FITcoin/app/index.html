@@ -14,8 +14,8 @@
 
 <body>
 
-  <nav class="navbar navbar-inverse bg-inverse">
-    <h1 class="navbar-brand">Fraunhofer Institute - Blockchain Lab</h1>
+  <nav class="navbar navbar-faded bg-faded">
+    <h1 class="navbar-brand"><div id="logo"></div></h1>
   </nav>
 
   <header>
@@ -25,35 +25,34 @@
         <br>
         <div class="data">
           <h5>You have <span class="black text-primary"><span id="balance"></span></span> FITcoins</h5>
-          <br>
-          <div class="row justify-content-center align-items-center">
+          <div class="row justify-content-center align-items-center mt-4">
             <div class="col-4 rounded transferBox">
               <h3 class="pt-3">Transfer FITcoin</h3>
               <hr>
-                <div class="row justify-content-center align-items-center">
-                  <div class="col-9">
-                    <div class="form-group">
+              <div class="row justify-content-center align-items-center">
+                <div class="col-9">
+                  <div class="form-group">
                     <input class="form-control form-control-sm" type="text" id="amount" placeholder="Amount"></input>
                   </div>
                   <div class="form-group">
-                  <input class="form-control form-control-sm" type="text" id="receiver" placeholder="Address"></input>
+                    <input class="form-control form-control-sm" type="text" id="receiver" placeholder="Address"></input>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn " id="send" onclick="App.transfer()">Transfer FITcoin</button>
+                  </div>
                 </div>
-                <div class="form-group">
-                <button class="btn btn-primary" id="send" onclick="App.transfer()">Transfer FITcoin</button>
               </div>
             </div>
           </div>
-
-            </div>
-            </div>
-
-          <br><br>
+          <br>
           <span class="text-danger" id="status"></span>
           <br>
         </div>
-        </div>
+      </div>
     </div>
   </header>
+
+
 
 
   <!-- jQuery first, then Tether, then Bootstrap JS. -->

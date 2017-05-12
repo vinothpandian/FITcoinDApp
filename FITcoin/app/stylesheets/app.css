@@ -8,7 +8,6 @@ body {
     color: #001A33;
     webkit-tap-highlight-color: #222;
     top:0;
-    background-color: #fefdf9;
 }
 
 header {
@@ -27,7 +26,27 @@ header .header-content {
     z-index: 2;
 }
 
+#balance, #address{
+  color:#179C7D;
+}
+
+.btn{
+  background-color: #179C7D;
+  color: white;
+}
+
+.btn:hover{
+  background-color: #1DC39C;
+  border: 1px solid white;
+}
+
 .transferBox{
   border: 1px solid #ccc;
-  background-color: #fefcf4;
+  border-radius: 20px;
+  background-color: #f9f9f9;
+}
+
+.navbar{
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
 }
